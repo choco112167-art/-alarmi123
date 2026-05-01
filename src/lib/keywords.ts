@@ -12,7 +12,7 @@ export const INCLUDE_KEYWORDS = [
 ];
 
 const EXCLUDE_KEYWORDS = ["분양", "전세자금", "청년", "임대주택"];
-const EXCLUDE_OVERRIDES = ["공동주택 지원사업", "심의결과"];
+const EXCLUDE_OVERRIDES = ["공동주택 지원사업", "선정결과", "심의결과"];
 
 export function getMatchedKeywords(text: string) {
   const normalized = text.replace(/\s+/g, " ").toLowerCase();

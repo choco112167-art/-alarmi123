@@ -1,13 +1,6 @@
 import { REGION_LABELS } from "@/config/sources";
 import { formatDate } from "@/lib/dates";
-
-type RssNotice = {
-  title: string;
-  originalUrl: string;
-  publishedAt: Date | null;
-  sourceRegion: string;
-  summary: string | null;
-};
+import type { StoredNotice } from "@/lib/notice-types";
 
 function escapeXml(value: string) {
   return value
@@ -18,7 +11,7 @@ function escapeXml(value: string) {
     .replace(/'/g, "&apos;");
 }
 
-export function buildRssXml(notices: RssNotice[], region?: string | null) {
+export function buildRssXml(notices: StoredNotice[], region?: string | null) {
   const appUrl =
     process.env.NEXT_PUBLIC_APP_URL ||
     process.env.APP_BASE_URL ||
@@ -30,9 +23,9 @@ export function buildRssXml(notices: RssNotice[], region?: string | null) {
 
   const items = notices
     .map((notice) => {
-      const description = `${REGION_LABELS[notice.sourceRegion as keyof typeof REGION_LABELS] || notice.sourceRegion} | ${notice.summary || ""}`;
+      const description = `${REGION_LABELS[notice.sourceRegion] || notice.sourceRegion} | ${notice.sourceName}`;
       const pubDate = notice.publishedAt
-        ? notice.publishedAt.toUTCString()
+        ? new Date(notice.publishedAt).toUTCString()
         : new Date().toUTCString();
 
       return `
@@ -60,6 +53,6 @@ export function buildRssXml(notices: RssNotice[], region?: string | null) {
 </rss>`;
 }
 
-export function getReadableRssDate(value: Date | null) {
+export function getReadableRssDate(value: string | null) {
   return formatDate(value);
 }

@@ -1,5 +1,5 @@
 const USER_AGENT =
-  "NamguNoticeAlert/0.1 (+https://railway.app; apartment-notice-rss-mvp)";
+  "UlsanApartmentNoticeAlert/0.1 (+https://vercel.app; apartment-notice-rss)";
 
 export function delay(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms));

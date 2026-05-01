@@ -1,8 +1,7 @@
 import * as cheerio from "cheerio";
-import crypto from "node:crypto";
 import type { Element } from "domhandler";
 import { shouldKeepNotice } from "@/lib/keywords";
-import { findDeadline, parseKoreanDate } from "@/lib/dates";
+import { parseKoreanDate } from "@/lib/dates";
 import type { CrawledNotice, ListItem } from "./types";
 import type { NoticeSource } from "@/config/sources";
 import { delay, fetchHtml } from "./http";
@@ -34,6 +33,7 @@ export async function crawlGenericBoard(source: NoticeSource) {
     const title = normalizeText($(anchor).text());
     const href = $(anchor).attr("href");
     if (!href || title.length < 4 || title.length > 180) return;
+    if (/더보기|검색|로그인|사이트맵|바로가기|채용/.test(title)) return;
 
     const url = absoluteUrl(href, source.url);
     if (!url || seen.has(url)) return;
@@ -44,11 +44,14 @@ export async function crawlGenericBoard(source: NoticeSource) {
 
     if (!hasNoticeShape) return;
 
+    const publishedAt = extractNearbyDate($, anchor);
+    if (!publishedAt) return;
+
     seen.add(url);
     items.push({
       title,
       detailUrl: url,
-      publishedAt: extractNearbyDate($, anchor),
+      publishedAt,
     });
   });
 
@@ -57,21 +60,32 @@ export async function crawlGenericBoard(source: NoticeSource) {
 
   for (const item of candidates) {
     await delay(500);
-    const detail = await fetchDetailPage(item.detailUrl);
+    let detail: Awaited<ReturnType<typeof fetchDetailPage>>;
+
+    try {
+      detail = await fetchDetailPage(item.detailUrl);
+    } catch {
+      continue;
+    }
+
     const contentText = detail.contentText || item.title;
-    const { keep, matchedKeywords } = shouldKeepNotice(item.title, contentText);
+    const titleResult = shouldKeepNotice(item.title);
+    const contentResult = shouldKeepNotice(item.title, contentText);
+    const titleLooksLikeNotice = /공고|고시|공시|선정|심의|지원|보조금|공동주택|주택/.test(
+      item.title,
+    );
+    const keep = titleResult.keep || (titleLooksLikeNotice && contentResult.keep);
+    const matchedKeywords = Array.from(
+      new Set([...titleResult.matchedKeywords, ...contentResult.matchedKeywords]),
+    );
 
     if (!keep) continue;
 
     notices.push({
       source,
       title: item.title,
-      summary: contentText.slice(0, 220),
-      contentText,
       originalUrl: item.detailUrl,
-      attachmentUrls: detail.attachmentUrls,
       publishedAt: item.publishedAt,
-      deadline: findDeadline(contentText),
       matchedKeywords,
     });
   }
@@ -110,8 +124,4 @@ export async function fetchDetailPage(url: string) {
     contentText,
     attachmentUrls: Array.from(attachmentUrls),
   };
-}
-
-export function createContentHash(parts: string[]) {
-  return crypto.createHash("sha256").update(parts.join("\n")).digest("hex");
 }

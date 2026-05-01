@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { ExternalLink, FileText, Search, ShieldCheck } from "lucide-react";
+import { ExternalLink, Search, ShieldCheck } from "lucide-react";
 import { REGION_LABELS, type RegionKey } from "@/config/sources";
 import { formatDate } from "@/lib/dates";
 
@@ -10,12 +10,9 @@ type Notice = {
   sourceRegion: RegionKey;
   sourceName: string;
   title: string;
-  summary: string | null;
   originalUrl: string;
-  attachmentUrls: string[];
   publishedAt: string | null;
   detectedAt: string;
-  deadline: string | null;
   matchedKeywords: string[];
 };
 
@@ -78,8 +75,8 @@ export function NoticeBrowser() {
             공동주택 공고를 한곳에서 빠르게 확인하세요
           </h1>
           <p className="mt-4 text-lg leading-8 text-[#6b7684]">
-            남구, 중구, 북구, 동구 구청 공고 중 공동주택 지원사업과 보조금, 심의결과
-            관련 소식을 모아 RSS로도 제공합니다.
+            남구, 중구, 북구, 동구 구청 공고 중 공동주택 지원사업과 보조금,
+            심의결과 관련 소식을 모아 RSS로도 제공합니다.
           </p>
         </header>
 
@@ -131,27 +128,25 @@ export function NoticeBrowser() {
         {!isLoading && !error ? (
           <div className="flex flex-col gap-4">
             {notices.map((notice) => (
-              <article
+              <a
                 key={notice.id}
+                href={notice.originalUrl}
+                target="_blank"
+                rel="noreferrer"
                 className="rounded-[26px] bg-white p-5 shadow-[0_14px_36px_rgba(0,27,55,0.10)] ring-1 ring-[#edf0f3]"
               >
                 <div className="flex items-center gap-2">
                   <span className="rounded-full bg-[#f2f4f6] px-3 py-1 text-xs font-bold text-[#4e5968]">
                     {REGION_LABELS[notice.sourceRegion]}
                   </span>
-                  {notice.deadline ? (
-                    <span className="rounded-full bg-[#fff3d7] px-3 py-1 text-xs font-bold text-[#915930]">
-                      마감 {formatDate(notice.deadline)}
-                    </span>
-                  ) : null}
+                  <span className="rounded-full bg-[#e8f3ff] px-3 py-1 text-xs font-bold text-[#1b64da]">
+                    {notice.sourceName}
+                  </span>
                 </div>
 
                 <h2 className="mt-4 text-xl font-black leading-8 tracking-tight">
                   {notice.title}
                 </h2>
-                <p className="mt-3 line-clamp-3 text-base leading-7 text-[#4e5968]">
-                  {notice.summary || "요약 내용이 없습니다."}
-                </p>
 
                 <dl className="mt-4 grid grid-cols-2 gap-3 text-sm">
                   <div>
@@ -159,7 +154,7 @@ export function NoticeBrowser() {
                     <dd className="mt-1 font-bold">{formatDate(notice.publishedAt)}</dd>
                   </div>
                   <div>
-                    <dt className="font-semibold text-[#8b95a1]">수집일</dt>
+                    <dt className="font-semibold text-[#8b95a1]">발견일</dt>
                     <dd className="mt-1 font-bold">{formatDate(notice.detectedAt)}</dd>
                   </div>
                 </dl>
@@ -175,29 +170,11 @@ export function NoticeBrowser() {
                   ))}
                 </div>
 
-                <div className="mt-5 flex flex-col gap-2 sm:flex-row">
-                  <a
-                    href={notice.originalUrl}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="inline-flex h-12 flex-1 items-center justify-center gap-2 rounded-[16px] bg-[#3182f6] px-4 text-sm font-bold text-white"
-                  >
-                    <ExternalLink size={18} />
-                    원문 보기
-                  </a>
-                  {notice.attachmentUrls[0] ? (
-                    <a
-                      href={notice.attachmentUrls[0]}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="inline-flex h-12 flex-1 items-center justify-center gap-2 rounded-[16px] bg-[#f2f4f6] px-4 text-sm font-bold text-[#333d4b]"
-                    >
-                      <FileText size={18} />
-                      첨부파일
-                    </a>
-                  ) : null}
+                <div className="mt-5 inline-flex h-12 w-full items-center justify-center gap-2 rounded-[16px] bg-[#3182f6] px-4 text-sm font-bold text-white">
+                  <ExternalLink size={18} />
+                  원문 보기
                 </div>
-              </article>
+              </a>
             ))}
           </div>
         ) : null}

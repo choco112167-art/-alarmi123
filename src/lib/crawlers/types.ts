@@ -14,12 +14,8 @@ export type Attachment = {
 export type CrawledNotice = {
   source: NoticeSource;
   title: string;
-  summary: string;
-  contentText: string;
   originalUrl: string;
-  attachmentUrls: string[];
   publishedAt: Date | null;
-  deadline: Date | null;
   matchedKeywords: string[];
 };
 

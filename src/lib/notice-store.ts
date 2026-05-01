@@ -2,6 +2,7 @@ import { promises as fs } from "node:fs";
 import path from "node:path";
 import { REGION_LABELS, type RegionKey } from "@/config/sources";
 import type { StoredNotice } from "@/lib/notice-types";
+import { seedNotices } from "@/lib/seed-notices";
 
 const noticesPath = path.join(process.cwd(), "data", "notices.json");
 
@@ -9,18 +10,17 @@ export async function readNotices() {
   try {
     const raw = await fs.readFile(noticesPath, "utf-8");
     const notices = JSON.parse(raw) as StoredNotice[];
-    return sortNotices(notices);
-  } catch (error) {
-    if (
-      error &&
-      typeof error === "object" &&
-      "code" in error &&
-      error.code === "ENOENT"
-    ) {
-      return [];
+    if (!Array.isArray(notices) || notices.length === 0) {
+      console.warn(
+        `No notices found in ${noticesPath}. Falling back to seed notices.`,
+      );
+      return sortNotices(seedNotices);
     }
 
-    throw error;
+    return sortNotices(notices);
+  } catch (error) {
+    console.error(`Failed to read notices from ${noticesPath}.`, error);
+    return sortNotices(seedNotices);
   }
 }
 

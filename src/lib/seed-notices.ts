@@ -1,0 +1,115 @@
+import type { StoredNotice } from "@/lib/notice-types";
+
+export const seedNotices: StoredNotice[] = [
+  {
+    id: "92547d472e8c662a",
+    sourceRegion: "namgu",
+    sourceName: "울산광역시 남구청 고시공고",
+    title: "2026년 공동주택 지원사업 선정결과 안내",
+    originalUrl:
+      "https://www.ulsannamgu.go.kr/cop/bbs/selectBoardArticle.do?bbsId=namguNews&nttId=519292",
+    publishedAt: null,
+    detectedAt: "2026-05-01T15:02:50.549Z",
+    matchedKeywords: ["공동주택", "공동 주택", "공동주택 지원사업", "선정결과"],
+  },
+  {
+    id: "38e0d95483b827f7",
+    sourceRegion: "namgu",
+    sourceName: "울산광역시 남구청 고시공고",
+    title: "2025년 공동주택지원사업 지원결과",
+    originalUrl:
+      "https://www.ulsannamgu.go.kr/cop/bbs/selectBoardArticle.do?bbsId=namguNews&nttId=508158",
+    publishedAt: null,
+    detectedAt: "2026-05-01T15:02:50.549Z",
+    matchedKeywords: ["공동주택", "공동 주택", "공동주택 지원사업"],
+  },
+  {
+    id: "4c884e5f195ca9cd",
+    sourceRegion: "namgu",
+    sourceName: "울산광역시 남구청 고시공고",
+    title: "2026년 공동주택 지원사업 신청",
+    originalUrl:
+      "https://www.ulsannamgu.go.kr/cop/bbs/selectBoardArticle.do?bbsId=namguNews&nttId=507213",
+    publishedAt: null,
+    detectedAt: "2026-05-01T15:02:50.549Z",
+    matchedKeywords: ["공동주택", "공동 주택", "공동주택 지원사업"],
+  },
+  {
+    id: "cc9a3f495e9ab43e",
+    sourceRegion: "namgu",
+    sourceName: "울산광역시 남구청 고시공고",
+    title: "2025년 공동주택 층간소음 저감매트 지원사업(추가접수)",
+    originalUrl:
+      "https://www.ulsannamgu.go.kr/cop/bbs/selectBoardArticle.do?bbsId=namguNews&nttId=477235",
+    publishedAt: null,
+    detectedAt: "2026-05-01T15:02:50.549Z",
+    matchedKeywords: ["공동주택", "공동 주택", "지원대상"],
+  },
+  {
+    id: "5b651d8197779868",
+    sourceRegion: "namgu",
+    sourceName: "울산광역시 남구청 고시공고",
+    title: "2025년 공동주택 지원사업 선정결과 안내",
+    originalUrl:
+      "https://www.ulsannamgu.go.kr/cop/bbs/selectBoardArticle.do?bbsId=namguNews&nttId=472936",
+    publishedAt: null,
+    detectedAt: "2026-05-01T15:02:50.549Z",
+    matchedKeywords: ["공동주택", "공동 주택", "공동주택 지원사업", "선정결과"],
+  },
+  {
+    id: "319f8344f5d05fd2",
+    sourceRegion: "namgu",
+    sourceName: "울산광역시 남구청 고시공고",
+    title: "공동주택 층간소음 저감매트 지원사업",
+    originalUrl:
+      "https://www.ulsannamgu.go.kr/cop/bbs/selectBoardArticle.do?bbsId=namguNews&nttId=467306",
+    publishedAt: null,
+    detectedAt: "2026-05-01T15:02:50.549Z",
+    matchedKeywords: ["공동주택", "공동 주택", "지원대상"],
+  },
+  {
+    id: "b0dc78ff5bce329b",
+    sourceRegion: "namgu",
+    sourceName: "울산광역시 남구청 고시공고",
+    title: "2024년 공동주택 지원사업 선정결과 안내",
+    originalUrl:
+      "https://www.ulsannamgu.go.kr/cop/bbs/selectBoardArticle.do?bbsId=namguNews&nttId=413894",
+    publishedAt: null,
+    detectedAt: "2026-05-01T15:02:50.549Z",
+    matchedKeywords: ["공동주택", "공동 주택", "공동주택 지원사업", "선정결과"],
+  },
+  {
+    id: "f904904ba8a306f9",
+    sourceRegion: "namgu",
+    sourceName: "울산광역시 남구청 고시공고",
+    title: "2023년 공동주택지원사업 지원대상 선정 결과",
+    originalUrl:
+      "https://www.ulsannamgu.go.kr/cop/bbs/selectBoardArticle.do?bbsId=namguNews&nttId=336422",
+    publishedAt: null,
+    detectedAt: "2026-05-01T15:02:50.549Z",
+    matchedKeywords: [
+      "공동주택",
+      "공동 주택",
+      "공동주택 지원사업",
+      "선정결과",
+      "지원대상",
+    ],
+  },
+  {
+    id: "360431cd3c561bf1",
+    sourceRegion: "namgu",
+    sourceName: "울산광역시 남구청 고시공고",
+    title: "2022년 공동주택 지원사업",
+    originalUrl:
+      "https://www.ulsannamgu.go.kr/cop/bbs/selectBoardArticle.do?bbsId=namguNews&nttId=270350",
+    publishedAt: null,
+    detectedAt: "2026-05-01T15:02:50.549Z",
+    matchedKeywords: [
+      "공동주택",
+      "공동 주택",
+      "공동주택 지원사업",
+      "선정결과",
+      "지원대상",
+    ],
+  },
+];

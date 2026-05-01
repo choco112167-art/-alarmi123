@@ -12,7 +12,14 @@ export async function GET(request: Request) {
       searchParams.get("q"),
     );
 
-    return NextResponse.json({ notices });
+    return NextResponse.json(
+      { notices },
+      {
+        headers: {
+          "Cache-Control": "s-maxage=60, stale-while-revalidate=300",
+        },
+      },
+    );
   } catch (error) {
     return NextResponse.json(
       {

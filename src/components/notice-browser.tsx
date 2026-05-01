@@ -42,7 +42,7 @@ export function NoticeBrowser() {
         });
         const data = await response.json();
         if (!response.ok) throw new Error(data.error || "공고를 불러오지 못했습니다.");
-        setNotices(data.notices);
+        setNotices(Array.isArray(data.notices) ? data.notices : []);
       } catch (caught) {
         if (caught instanceof DOMException && caught.name === "AbortError") return;
         setError(caught instanceof Error ? caught.message : "공고를 불러오지 못했습니다.");

@@ -80,6 +80,8 @@ NEXT_PUBLIC_APP_URL="https://YOUR_RAILWAY_DOMAIN"
 
 ## Railway 배포 절차
 
+Railway 대시보드에서 **Deploy from GitHub repo**를 선택하고 이 저장소를 연결합니다.
+
 CLI가 설치되어 있지 않으면 먼저 설치합니다.
 
 ```bash
